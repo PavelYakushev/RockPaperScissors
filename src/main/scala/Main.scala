@@ -18,10 +18,17 @@ object Main {
 
     } else {
       val opponent_action = roll()
-      System.out.println(opponent_action,
+      System.out.println(
+        if(opponent_action == 0)
+         "r"
+        else if(opponent_action == 1)
+          "p"
+        else
+          "s"
+        ,
         if (player_action == opponent_action)
           "Tie"
-        else if (opponent_action == (player_action + 1) % 3)
+        else if (player_action == (opponent_action + 1) % 3)
           "Victory"
         else
           "Loss"
@@ -30,12 +37,22 @@ object Main {
     }
   }
 
+  @tailrec
   def prompt(): Int = {
-    val in: Int = scanner.nextInt()
-    if(in > 3 || in < 0)
+    System.out.println("Please choose from (r)ock, (p)aper, (s)cissors or (e)nd")
+    val in: String = scanner.nextLine()
+    if(in == "r")
+      0
+    else if(in == "p")
+      1
+    else if(in == "s")
+      2
+    else if(in == "e")
       3
-    else
-      in
+    else {
+      System.out.print("Incorrect input. ")
+      prompt()
+    }
   }
 
   def roll(): Int = {
